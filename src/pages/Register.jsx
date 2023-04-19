@@ -1,7 +1,9 @@
 import classNames from "classnames";
 import { RiImageAddFill } from "react-icons/all.js";
-import { createUserWithEmailAndPassword, getAuth } from "firebase/auth";
-import { auth } from "../firebase.js";
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+import { auth, storage } from "../firebase.js";
+
 import { useState } from "react";
 
 const inputStyle = classNames(
@@ -19,6 +21,24 @@ const Register = () => {
 
     try {
       const res = await createUserWithEmailAndPassword(auth, email, password);
+
+      const storageRef = ref(storage, displayName);
+
+      const uploadTask = uploadBytesResumable(storageRef, file);
+
+      uploadTask.on(
+        (error) => {
+          setErr(true);
+        },
+        () => {
+          getDownloadURL(uploadTask.snapshot.ref).then(async (downloadURL) => {
+            await updateProfile(res.user, {
+              displayName,
+              photoURL: downloadURL,
+            });
+          });
+        }
+      );
     } catch (err) {
       setErr(true);
     }
