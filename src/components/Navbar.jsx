@@ -1,6 +1,6 @@
 const Navbar = () => {
   return (
-    <div className="flex items-center bg-purple-500 h-12 p-3 justify-between text-neutral-100">
+    <div className="flex items-center bg-indigo-500 h-12 p-3 justify-between text-neutral-100">
       <div className="font-bold">Khazziro Chat</div>
       <div className="flex gap-3">
         <img
@@ -9,7 +9,7 @@ const Navbar = () => {
           className="bg-neutral-100 h-6 w-6 rounded-full object-cover "
         />
         <span>Renato</span>
-        <button className="bg-purple-400 text-neutral-100 text-xs px-2">
+        <button className="bg-indigo-400 text-neutral-100 text-xs px-2">
           Logout
         </button>
       </div>

@@ -8,7 +8,7 @@ const Search = () => {
           placeholder="Find an user"
         />
       </div>
-      <div className="userChat p-3 flex items-center gap-3 text-white cursor-pointer hover:bg-purple-500">
+      <div className="userChat p-3 flex items-center gap-3 text-white cursor-pointer hover:bg-indigo-500">
         <img
           src="https://images.pexels.com/photos/16161517/pexels-photo-16161517.jpeg"
           className="h-12 w-12 rounded-full object-cover"
