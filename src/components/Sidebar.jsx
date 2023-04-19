@@ -4,7 +4,7 @@ import Chats from "./Chats.jsx";
 
 const Sidebar = () => {
   return (
-    <div className="flex-1 bg-indigo-400">
+    <div className="flex-1 bg-indigo-400 relative">
       <Navbar />
       <Search />
       <Chats />

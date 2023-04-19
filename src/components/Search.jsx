@@ -1,6 +1,6 @@
 const Search = () => {
   return (
-    <div className="border-b border-b-gray-100">
+    <div className="border-b border-b-indigo-950/10">
       <div className="search p-3">
         <input
           type="text"
