@@ -2,7 +2,8 @@ import classNames from "classnames";
 import { RiImageAddFill } from "react-icons/all.js";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
-import { auth, storage } from "../firebase.js";
+import { auth, db, storage } from "../firebase.js";
+import { doc, setDoc } from "firebase/firestore";
 
 import { useState } from "react";
 
@@ -17,13 +18,12 @@ const Register = () => {
     const displayName = e.target[0].value;
     const email = e.target[1].value;
     const password = e.target[2].value;
-    const file = e.target[3].value;
+    const file = e.target[3].files[0];
 
     try {
+      //Create user
       const res = await createUserWithEmailAndPassword(auth, email, password);
-
       const storageRef = ref(storage, displayName);
-
       const uploadTask = uploadBytesResumable(storageRef, file);
 
       uploadTask.on(
@@ -32,8 +32,16 @@ const Register = () => {
         },
         () => {
           getDownloadURL(uploadTask.snapshot.ref).then(async (downloadURL) => {
+            //Update profile
             await updateProfile(res.user, {
               displayName,
+              photoURL: downloadURL,
+            });
+            //create user on firestore
+            await setDoc(doc(db, "users", res.user.uid), {
+              uid: res.user.uid,
+              displayName,
+              email,
               photoURL: downloadURL,
             });
           });
