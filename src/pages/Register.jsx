@@ -6,6 +6,7 @@ import { auth, db, storage } from "../firebase.js";
 import { doc, setDoc } from "firebase/firestore";
 
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const inputStyle = classNames(
   "py-4 px-7 border-b border-b-indigo-300 placeholder:text-neutral-300"
@@ -13,6 +14,7 @@ const inputStyle = classNames(
 
 const Register = () => {
   const [err, setErr] = useState(false);
+  const navigate = useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault();
     const displayName = e.target[0].value;
@@ -44,6 +46,8 @@ const Register = () => {
               email,
               photoURL: downloadURL,
             });
+            await setDoc(doc(db, "usersChat"), res.user.uid), {};
+            navigate("/");
           });
         }
       );
