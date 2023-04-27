@@ -6,7 +6,7 @@ import { auth, db, storage } from "../firebase.js";
 import { doc, setDoc } from "firebase/firestore";
 
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const inputStyle = classNames(
   "py-4 px-7 border-b border-b-indigo-300 placeholder:text-neutral-300"
@@ -25,6 +25,8 @@ const Register = () => {
     try {
       //Create user
       const res = await createUserWithEmailAndPassword(auth, email, password);
+
+      //Create a unique image name
       const storageRef = ref(storage, displayName);
       const uploadTask = uploadBytesResumable(storageRef, file);
 
@@ -89,7 +91,7 @@ const Register = () => {
           {err && <span>Something went wrong</span>}
         </form>
         <p className="text-indigo-400 text-sm mt-3 cursor-pointer">
-          You do have an account? Login!
+          <Link to={"/login"}>You do have an account? Login!</Link>
         </p>
       </div>
     </div>
